@@ -18,8 +18,8 @@ async def on_ready():
 
 
 @bot.command()
-async def botngu(ctx):
-    await ctx.send('Mày mới ngu á, thằng gà')
+async def great(ctx):
+    await ctx.send('Thanks, I love you')
 
 
 @bot.command()
@@ -33,11 +33,10 @@ async def start(ctx):
 
 
 @bot.command(help='Phát nhạc trên Youtube.')
-async def play(ctx, url):
+async def play(ctx, url: str):
     if 'https://www.youtube.com/' not in url:
         videosSearch = VideosSearch(url, limit=1)
         url = videosSearch.result()['result'][0]['link']
-        await ctx.send(url)
 
     voice = discord.utils.get(bot.voice_clients, guild=ctx.guild)
     if voice == None:
@@ -50,6 +49,7 @@ async def play(ctx, url):
         URL = info['formats'][0]['url']
 
     voice.play(discord.FFmpegPCMAudio(URL))
+    await ctx.send('Now playing ' + url)
 
 
 @bot.command()
