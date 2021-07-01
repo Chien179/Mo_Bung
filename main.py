@@ -38,36 +38,18 @@ async def play(ctx, url):
         videosSearch = VideosSearch(url, limit=1)
         url = videosSearch.result()['result'][0]['link']
         await ctx.send(url)
-    song = os.path.isfile('song.mp3')
-
-    try:
-        if song:
-            os.remove('song.mp3')
-    except PermissionError:
-        await ctx.send('Lỗi rồi thằng ngáo đá, lỗi này tao chưa biết sửa')
-        return
 
     voice = discord.utils.get(bot.voice_clients, guild=ctx.guild)
     if voice == None:
         await connect(ctx)
 
-    ydl_opts = {
-        'format': 'bestaudio/best',
-        'postprocessors': [{
-            'key': 'FFmpegExtractAudio',
-            'preferredcodec': 'mp3',
-            'preferredquality': '192',
-        }],
-    }
+    ydl_opts = {'format': 'bestaudio/best'}
 
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-        ydl.download([url])
+        info = ydl.extract_info(url, download=False)
+        URL = info['formats'][0]['url']
 
-    for file in os.listdir('./'):
-        if file.endswith('.mp3'):
-            os.rename(file, 'song.mp3')
-
-    voice.play(discord.FFmpegPCMAudio('song.mp3'))
+    voice.play(discord.FFmpegPCMAudio(URL))
 
 
 @bot.command()
