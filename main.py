@@ -3,6 +3,7 @@ import discord
 import youtube_dl
 from dotenv import load_dotenv
 from discord.ext import commands
+from youtubesearchpython import VideosSearch
 
 load_dotenv()
 
@@ -31,8 +32,21 @@ async def start(ctx):
     await ctx.send('Thằng lập trình mình ngu vl các bạn ạ!!!')
 
 
-@bot.command()
+@bot.command(help='Phát nhạc trên Youtube.')
 async def play(ctx, url):
+    if 'https://www.youtube.com/' not in url:
+        videosSearch = VideosSearch(url, limit=1)
+        url = videosSearch.result()['result'][0]['link']
+        await ctx.send(url)
+    song = os.path.isfile('song.mp3')
+
+    try:
+        if song:
+            os.remove('song.mp3')
+    except PermissionError:
+        await ctx.send('Lỗi rồi thằng ngáo đá, lỗi này tao chưa biết sửa')
+        return
+
     voice = discord.utils.get(bot.voice_clients, guild=ctx.guild)
     if voice == None:
         await connect(ctx)
@@ -47,10 +61,13 @@ async def play(ctx, url):
     }
 
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-        info = ydl.extract_info(url, download=False)
-        URL = info['formats'][0]['url']
+        ydl.download([url])
 
-    voice.play(discord.FFmpegPCMAudio(URL))
+    for file in os.listdir('./'):
+        if file.endswith('.mp3'):
+            os.rename(file, 'song.mp3')
+
+    voice.play(discord.FFmpegPCMAudio('song.mp3'))
 
 
 @bot.command()
@@ -71,7 +88,7 @@ async def resume(ctx):
         await ctx.send('The audio is not pause')
 
 
-@bot.command()
+@bot.command(help='Kết nối đến kênh âm thanh')
 async def connect(ctx):
     voice = discord.utils.get(bot.voice_clients, guild=ctx.guild)
     connected = ctx.author.voice
