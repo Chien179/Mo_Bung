@@ -33,7 +33,8 @@ async def start(ctx):
 
 
 @bot.command(help='Phát nhạc trên Youtube.')
-async def play(ctx, url):
+async def play(ctx, *args):
+    url = ' '.join(args)
     if 'https://www.youtube.com/' not in url:
         videosSearch = VideosSearch(url, limit=1)
         url = videosSearch.result()['result'][0]['link']
@@ -114,6 +115,5 @@ async def leave(ctx):
 async def stop(ctx):
     voice = discord.utils.get(bot.voice_clients, guild=ctx.guild)
     voice.stop()
-
 
 bot.run(token)
