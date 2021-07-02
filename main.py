@@ -39,9 +39,12 @@ async def play(ctx, *args):
         videosSearch = VideosSearch(url, limit=1)
         url = videosSearch.result()['result'][0]['link']
 
-    voice = discord.utils.get(bot.voice_clients, guild=ctx.guild)
-    if voice == None:
-        await connect(ctx)
+    while True:
+        voice = discord.utils.get(bot.voice_clients, guild=ctx.guild)
+        if voice == None:
+            await connect(ctx)
+        else:
+            break
 
     ydl_opts = {'format': 'bestaudio/best'}
 
@@ -79,10 +82,9 @@ async def connect(ctx):
         await ctx.send('You need to be connected in a voice channel first')
         return
     if voice != None:
-        await ctx.send("i'm already connected to a voice channel.")
+        await ctx.send("I'm already connected to a voice channel.")
         return
     await connected.channel.connect()
-
 
 @bot.command()
 async def leave(ctx):
