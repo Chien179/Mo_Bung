@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2bc2e0ce-6ed6-4f9e-adaa-59b8e4db55d2" name="Default Changelist" comment="Mỡ Bụng ver 0.2">
+    <list default="true" id="2bc2e0ce-6ed6-4f9e-adaa-59b8e4db55d2" name="Default Changelist" comment="Mỡ Bụng ver 0.2.1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
@@ -146,7 +146,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="BeoBungBu" />
+                        <option value="master/master" />
                       </list>
                     </value>
                   </entry>
