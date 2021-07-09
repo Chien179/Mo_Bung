@@ -39,30 +39,26 @@ async def start(ctx):
 @bot.command(help='Phát nhạc trên Youtube.')
 async def play(ctx, *args):
     url = ' '.join(args)
-    # if 'https://www.youtube.com/' not in url:
 
     inforVideo = infor_video(url)
 
     musicQueue.append(inforVideo[0])
 
     voice = discord.utils.get(bot.voice_clients, guild=ctx.guild)
-    if voice == None:
-        await connect(ctx)
-
-    await ctx.send('Queued ' + inforVideo[1] + '\t*(Channel: ' + inforVideo[2] + ')*')
-    playing.start(ctx)
-
-
-async def connect(ctx):
-    voice = discord.utils.get(bot.voice_clients, guild=ctx.guild)
     connected = ctx.author.voice
     if not connected:
         await ctx.send('You need to be connected in a voice channel first')
         return
-    if voice != None:
-        await ctx.send("I'm already connected to a voice channel.")
+    if voice == None:
+        await connected.channel.connect()
+
+    try:
+        playing.start(ctx)
+    except RuntimeError:
         return
-    await connected.channel.connect()
+    finally:
+        print('Added to queue')
+        await ctx.send('Queued ' + inforVideo[1] + '\t*(Channel: ' + inforVideo[2] + ')*')
 
 
 def infor_video(url):
@@ -92,33 +88,43 @@ async def playing(ctx):
         voice.play(discord.FFmpegPCMAudio(URL, **FFMPEG_OPTIONS))
         print('playing ' + url)
         await ctx.send('Now playing ' + url)
-        print('done')
+        print('played ' + url)
 
 
 @bot.command(help='Tạm dừng phát nhạc')
 async def pause(ctx):
     voice = discord.utils.get(bot.voice_clients, guild=ctx.guild)
-    if voice.is_playing():
-        voice.pause()
-    else:
+    try:
+        if voice.is_playing():
+            voice.pause()
+        else:
+            await ctx.send('Currently no audio is playing')
+    except AttributeError:
         await ctx.send('Currently no audio is playing')
 
 
 @bot.command(help='Tiếp tục phát nhạc')
 async def resume(ctx):
     voice = discord.utils.get(bot.voice_clients, guild=ctx.guild)
-    if voice.is_paused():
-        voice.resume()
-    else:
-        await ctx.send('The audio is not pause')
+    try:
+        if voice.is_paused():
+            voice.resume()
+        else:
+            if not voice.is_playing():
+                await ctx.send('Bot not playing audio')
+            else:
+                await ctx.send('The audio is not pause')
+    except AttributeError:
+        await ctx.send('Bot not playing audio')
 
 
 @bot.command(help='Bot ngắt kết nối khỏi voice channel')
 async def leave(ctx):
     voice = discord.utils.get(bot.voice_clients, guild=ctx.guild)
     if voice != None:
+        await stop(ctx)
         await voice.disconnect()
-        ctx.send('Goodbye, have a nice day!!!')
+        await ctx.send('Goodbye, have a nice day!!!')
     else:
         await ctx.send('The bot is not connected to a voice channel')
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2bc2e0ce-6ed6-4f9e-adaa-59b8e4db55d2" name="Default Changelist" comment="fix lỗi phát nhạc lần đầu">
+    <list default="true" id="2bc2e0ce-6ed6-4f9e-adaa-59b8e4db55d2" name="Default Changelist" comment="Mỡ Bụng ver 0.2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
@@ -11,12 +11,12 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Merge.Settings">
-    <option name="BRANCH" value="master" />
+    <option name="BRANCH" value="master/BeoBungBu" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="BeoBungBu" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -122,7 +122,14 @@
       <option name="project" value="LOCAL" />
       <updated>1625145850979</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Mỡ Bụng ver 0.2">
+      <created>1625682065459</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1625682065460</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -139,7 +146,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="master/BeoBungBu" />
+                        <option value="BeoBungBu" />
                       </list>
                     </value>
                   </entry>
@@ -172,6 +179,7 @@
     <MESSAGE value="init" />
     <MESSAGE value="can play musci &gt; 5'" />
     <MESSAGE value="fix tìm nhạc bằng ytsearch" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix tìm nhạc bằng ytsearch" />
+    <MESSAGE value="Mỡ Bụng ver 0.2" />
+    <option name="LAST_COMMIT_MESSAGE" value="Mỡ Bụng ver 0.2" />
   </component>
 </project>
