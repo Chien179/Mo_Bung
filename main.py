@@ -6,12 +6,12 @@ from threading import Thread
 from dotenv import load_dotenv
 from discord.ext import commands, tasks
 from youtubesearchpython import VideosSearch
-
+from hehe import keep_alive
 load_dotenv()
 
-token = os.getenv('WTOKEN')
+token = os.getenv('TOKEN')
 
-bot = commands.Bot(command_prefix='$')
+bot = commands.Bot(command_prefix='!')
 
 musicQueue = []
 
@@ -157,4 +157,6 @@ async def queue(ctx):
 async def clear():
     musicQueue.clear()
 
+
+keep_alive()
 bot.run(token)
