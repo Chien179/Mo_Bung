@@ -12,6 +12,7 @@ token = os.getenv('TOKEN')
 bot = commands.Bot(command_prefix='!')
 
 musicQueue = []
+nowPlaying = ''
 
 
 @bot.event
@@ -83,6 +84,8 @@ async def playing(ctx):
                           'options': '-vn'}
 
         url = musicQueue.pop(0)
+        global nowPlaying
+        nowPlaying = infor_video(url)[1]
 
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             info = ydl.extract_info(url, download=False)
@@ -145,6 +148,8 @@ async def stop(ctx):
     voice.stop()
     musicQueue.clear()
     playing.stop()
+    global nowPlaying
+    nowPlaying = ''
 
 
 @bot.command(help='Danh sách chờ phát nhạc')
@@ -159,9 +164,17 @@ async def queue(ctx):
 
 
 @bot.command(help='Xoá danh sách chờ')
-async def clear():
+async def clear(ctx):
     musicQueue.clear()
 
+
+@bot.command(help='Bài hát đang được phát')
+async def nowplaying(ctx):
+    if nowPlaying == '':
+        await ctx.send(embed=message_embed("The audio isn't playing"))
+    else:
+        message = 'Now playing ' + nowPlaying
+        await ctx.send(embed=message_embed(message))
 
 keep_alive()
 bot.run(token)
